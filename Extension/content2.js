@@ -7,7 +7,6 @@
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if (message.type === "username") {
             username = message.value;
-            console.log("username accepted");
             main();
         } else if (message.type === "extensionValue") {
             extensionOn = message.value;
@@ -40,10 +39,8 @@
         let messageTexts = [];
         messageDivs.forEach(div => {
             let text = div.textContent.trim(); 
-            // let final_text = text.replace('You', username);
             messageTexts.push(text); 
         });
-        console.log(messageTexts); 
         return messageTexts;
     }
 
@@ -65,22 +62,19 @@
             last_their_messages_length = their_messages_length;
             // generating the request message 
             let request_message = generatePrompt(chats);
-            console.log(request_message); // just for debuggin purposes 
-
             // make the api request 
             let response = await make_api_calls(request_message);
             setTimeout(() => {
                 console.log("waiting to send the message")
             }, 2000); 
+            // sending back the message to the chat
             sendMessage(response);
         }
     }
     // ----- METHODS TO GENERATE THE PROMPT BEGIN HERE -----
 
-    function generatePrompt(chats) {
-        let prompt = getRules() + chats;
-        // "Note: there should not be any conversation logs or anything else. Only the final response";
-        return prompt;
+    function generatePrompt(chats) {;
+        return getRules() + chats;
     }
 
 
@@ -115,8 +109,6 @@
             }
 
             const chatCompletion = data.choices[0].message.content;
-            console.log(`API Response: ${chatCompletion}`); // for debugging purposes
-
             return chatCompletion;
         } catch (error) {
             console.error('API Request Error:', error);
@@ -143,5 +135,4 @@
             setInterval(start_application, 5000);
         }
     }
-
 })();
