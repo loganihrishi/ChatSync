@@ -1,14 +1,14 @@
-let username;
-let extensionOn;
+let username = 'hrishi';
+let extensionOn = true;
 
 // Receiving the message in content.js
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.type === "username") {
-        username = message.value;
-    } else if (message.type === "extensionValue") {
-        extensionOn = message.value;
-    }
-  });
+// chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+//     if (message.type === "username") {
+//         username = message.value;
+//     } else if (message.type === "extensionValue") {
+//         extensionOn = message.value;
+//     }
+//   });
 
 function getRules() {
     let rules = "Follow these rules for the success of the model:\n" +
@@ -52,20 +52,19 @@ function parse_messages(messages_array) {
 
 // ----- METHODS TO EXTRACT THE CHAT END HERE -----
 
-let initial_chats = extractChats();
-
-console.log(`Initial chats: ${initial_chats}`);
 
 async function start_application() {
     let new_chats = extractChats();
-    console.log(`New chats: ${new_chats}`);
+    console.log(`New my_messages: ${new_chats.my_messages}`);
+    console.log(`New their messages: ${new_chats.their_messages}`);
 
-    console.log(`Are the chats updated? ${isChatsUpdated(initial_chats, new_chats)}`);
+    let isUpdated = isChatsUpdated(initial_chats, new_chats);
+    console.log(`Are the chats updated? ${isUpdated}`);
     // checking if chats are updated 
-    if (isChatsUpdated(initial_chats, new_chats)) {
+    if (isUpdated) {
 
         // TODO: update this part, if needed
-        initial_chats = new_chats;
+        initial_chats = {...new_chats};
 
         // generate the request message 
         let request_message = generatePrompt(new_chats);
@@ -108,7 +107,7 @@ function generatePrompt(chats) {
     console.log(my_messages);
     console.log(their_messages);
 
-    let prompt = getRules() + `my messages: [${my_messages}]` + "\n" + `their messages: [${their_messages}]`;
+    let prompt = getRules() + `${username}'s messages: [${my_messages}]` + "\n" + `their messages: [${their_messages}]`;
     return prompt;
 }
 
@@ -167,9 +166,15 @@ function sendMessage(message) {
 
 // our looping function, which will run every 5 seconds 
 
+
+let initial_chats = extractChats();
+console.log(`Initial chats: ${initial_chats}`);
+console.log(`My Messages: ${initial_chats.my_messages}`);
+console.log(`Their Messages: ${initial_chats.their_messages}`);
+
 async function main() {
     if (extensionOn) {
-        start_application();
+        setInterval(start_application, 5000);
     }
 }
 
