@@ -4,7 +4,7 @@
 
 **Contextual Continuation:** ChatSync picks up where you left off, comprehending the nuances of ongoing conversations. No need to repeat yourself or backtrack. It effortlessly extends discussions, making chats feel like uninterrupted dialogues.
 
-**Personalized Interaction:** Our AI learns from your communication style, adapting its responses to match your tone, language, and preferences. It's like having a conversation with a close friend who knows you inside out.
+**Personalized Interaction:** Our model learns from your communication style, adapting its responses to match your tone, language, and preferences. It's like having a conversation with a close friend who knows you inside out.
 
 **Dynamic Adaptation:** Whether you're sharing stories, discussing news, or just exchanging pleasantries, ChatSync keeps the momentum going. It can inject humor, express empathy, and even suggest relevant topics to explore.
 
