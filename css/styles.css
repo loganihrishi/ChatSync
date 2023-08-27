@@ -1,0 +1,80 @@
+/* .logo {
+    display: block;
+    margin: auto;
+    width: 85px;
+    height: 85px;
+} */
+
+body {
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    background-image: url('valley-blurred.jpg'); 
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-position: center center; 
+  }
+
+.container {
+    max-width: 955px;
+    background-color: #121212;
+    margin: 6px auto 0;
+    height: 60vh;
+    padding: 33px;
+    overflow-y: auto;
+    margin-bottom: 23px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.message {
+    background-color: #007AFF;
+    width: fit-content;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 15px;
+    color: white;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 70%; /* Limit the width for better readability */
+    font-family: 'Arial', sans-serif;
+}
+
+.left {
+    float: left;
+    clear: both;
+
+}
+
+.right{ 
+    float: right;
+    clear: both;
+}
+
+#send-container{
+    display: block;
+    margin: auto;
+    margin-left: 232px; 
+    text-align: center;
+    max-width: 985px;
+    width: 100%;
+
+}
+
+#messageInp {
+    background-color: #121212;
+    width: 92%;
+    border: 2px;
+    border-radius: 15px;
+    height: 25px;
+    padding: 10px;
+    color: white;
+    font-size: 16px;
+}
+
+.btn {
+    cursor: pointer;
+    border-radius: 6px;
+    height: 37px;
+    background-color: #121212; /* Adjust the alpha value as needed */
+}
+
+  
