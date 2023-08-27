@@ -9,7 +9,7 @@
     "content_scripts": [
         {
             "matches": ["http://127.0.0.1:5500/index.html"],
-            "js": ["content2.js"]
+            "js": ["content.js"]
         }
     ],
     "action": {

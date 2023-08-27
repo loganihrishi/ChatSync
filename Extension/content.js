@@ -77,7 +77,6 @@
         return getRules() + chats;
     }
 
-
     // ----- METHODS TO GENERATE THE PROMPT END HERE -----
 
 
@@ -127,7 +126,7 @@
         sendButton.click();
     }
 
-    // our looping function, which will run every 5 seconds 
+    // ----- METHODS TO SEND THE MESSAGE END HERE ----- 
 
     async function main() {
         console.log("main running");
