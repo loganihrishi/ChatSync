@@ -2,7 +2,7 @@
     "name": "ChatSync",
     "version": "1.0",
     "manifest_version": 3,
-    "description": "Extension to chat using bot",
+    "description": "Automate ChatSync messages",
     "permissions": [
         "activeTab"
     ],

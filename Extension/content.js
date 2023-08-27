@@ -1,16 +1,12 @@
-let extensionOn = false;
-let username = '';
+let username;
+let extensionOn;
 
 // Receiving the message in content.js
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.type === "username") {
-      username = message.data;
-      console.log("Received username:", username);
-      // Do something with the received username data
+        username = message.value;
     } else if (message.type === "extensionValue") {
-      extensionOn = message.data;
-      console.log("Received extensionOn status:", extensionOn);
-      // Do something with the received extensionOn data
+        extensionOn = message.value;
     }
   });
 

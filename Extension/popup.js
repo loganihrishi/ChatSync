@@ -1,5 +1,11 @@
-import { getActiveTabURL } from "./utils.js";
+async function getActiveTabURL() {
+  const tabs = await chrome.tabs.query({
+      currentWindow: true,
+      active: true
+  });
 
+  return tabs[0];
+}
 let extensionOn = false;
 let username = '';
 
@@ -21,10 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
       type: "extensionValue",
       value: extensionOn,
     });
-    // chrome.tabs.sendMessage({ type: "extensionOn", data: extensionOn }, (response) => {
-    //   console.log(extensionOn);
-    //     console.log("ExtensionOn status sent to content script:", response);
-    //   });
   }
 
   const setUsername = async () => {
@@ -36,9 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
       type: "username",
       value: username,
     });
-    // chrome.tabs.sendMessage({ type: "username", data: username }, (response) => {
-    //     console.log("Username sent to content script:", response);
-    //   });
   }
 
   toggleButton.addEventListener('click', toggleExtension);
