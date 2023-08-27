@@ -1,6 +1,7 @@
 (() => {
-    let username = 'hrishi';
+    let username = 'user';
     let extensionOn = true;
+    let last_their_messages_length = 0;
 
     // Receiving the message in content.js
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -35,84 +36,50 @@
 
     function extractChats() {
         console.log("extracting chats");
-        let my_messages = [];
-        let their_messages = [];
-
-        let message_list = document.getElementById('message-list');
-        let my_message_array = message_list.querySelectorAll('.message.right');
-        let their_message_array  =message_list.querySelectorAll('.message.left');
-        my_messages = parse_messages(my_message_array);
-        their_messages = parse_messages(their_message_array);
-        return {my_messages: my_messages, their_messages: their_messages};
+        const messageDivs = document.querySelectorAll(".message");
+        let messageTexts = [];
+        messageDivs.forEach(div => {
+            let text = div.textContent.trim(); 
+            // let final_text = text.replace('You', username);
+            messageTexts.push(text); 
+        });
+        console.log(messageTexts); 
+        return messageTexts;
     }
 
-    function parse_messages(messages_array) {
-        result = [];
-        messages_array.forEach( function (message) {
-            result.push(message.textContent.trim());
-        })
-        return result;
+    function extract_their_chats_length() {
+        let messages = document.getElementById("message-list");
+        let their_messages = messages.querySelectorAll('.message.left');
+        return their_messages.length;
     }
+
 
     // ----- METHODS TO EXTRACT THE CHAT END HERE -----
 
 
     async function start_application() {
-        console.log("app started");
-        let new_chats = extractChats();
-        console.log(`New my_messages: ${new_chats.my_messages}`);
-        console.log(`New their messages: ${new_chats.their_messages}`);
+        console.log('app started');
+        let chats = extractChats();
+        let their_messages_length = extract_their_chats_length();
+        if (their_messages_length > last_their_messages_length) {
+            last_their_messages_length = their_messages_length;
+            // generating the request message 
+            let request_message = generatePrompt(chats);
+            console.log(request_message); // just for debuggin purposes 
 
-        let isUpdated = isChatsUpdated(initial_chats, new_chats);
-        console.log(`Are the chats updated? ${isUpdated}`);
-        // checking if chats are updated 
-        if (isUpdated) {
-
-            // creating a shallow copy 
-            initial_chats = {...new_chats};
-
-            // generate the request message 
-            let request_message = generatePrompt(new_chats);
-            console.log(`Request Message: ${request_message}`);
-            // generating the api response 
+            // make the api request 
             let response = await make_api_calls(request_message);
-            console.log("Type of response: " + typeof(response));
-            console.log(`Response: ${response}`);
-
-            // waiting to send the message, 2 seconds
             setTimeout(() => {
-                console.log('waiting to send the message');
-            }, 2000);
-            
-            // sending back the message 
+                console.log("waiting to send the message")
+            }, 2000); 
             sendMessage(response);
         }
     }
-
-    function isChatsUpdated(chats1, chats2) {
-        return chats1.their_messages.length != chats2.their_messages.length;
-    }
-    
-    // function arraysAreEqual(arr1, arr2) {
-    //     if (arr1.length !== arr2.length) {
-    //         return false;
-    //     }
-        
-    //     for (let i = 0; i < arr1.length; i++) {
-    //         if (arr1[i] !== arr2[i]) {
-    //             return false;
-    //         }
-    //     }
-    //     return true;
-    // }
-    
-
     // ----- METHODS TO GENERATE THE PROMPT BEGIN HERE -----
 
     function generatePrompt(chats) {
-        let my_messages = `[${chats.my_messages.toString()}]`;
-        let their_messages = `[${chats.their_messages.toString()}]`;
-        let prompt = getRules() + `${username}'s messages: [${my_messages}]` + "\n" + `their messages: [${their_messages}]`;
+        let prompt = getRules() + chats;
+        // "Note: there should not be any conversation logs or anything else. Only the final response";
         return prompt;
     }
 
@@ -135,8 +102,7 @@
             body: JSON.stringify({
                 model: "gpt-3.5-turbo",
                 messages: [{role: "user", content: prompt}],
-                temperature: 0.8,
-                max_tokens: 100,
+                temperature: 0.5
             }),
         };
 
@@ -170,12 +136,6 @@
     }
 
     // our looping function, which will run every 5 seconds 
-
-
-    let initial_chats = extractChats();
-    console.log(`Initial chats: ${initial_chats}`);
-    console.log(`${username}'s Messages: ${initial_chats.my_messages}`);
-    console.log(`Their Messages: ${initial_chats.their_messages}`);
 
     async function main() {
         console.log("main running");
