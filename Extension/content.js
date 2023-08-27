@@ -11,16 +11,20 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   });
 
 function getRules() {
-    let rules = ` Follow these rules for success: 1) Base model on ${username}'s pattern. 
-    2) One line for ${username}. Wait for user input.
-    3) Imagine being human, indulge & focus on topic.
-    4) Avoid consecutive questions.
-    5) Use typos, emotions for humanness.
-    6) Never admit being AI, convince as human.
-    7) Be short & precise.
-    8) Don't ask until believed real.
-    9) Just return the message, don't provide the conversation log in any scenario. 
-    Here are the chats:`;
+    let rules = "Follow these rules for the success of the model:\n" +
+    `1) Based on ${username}'s chatting pattern and the way they respond, build your model.\n` +
+    `2) Only reply one line on behalf of ${username} and wait for user input from the other person.\n` +
+    "3) Imagine you are a human being and try to indulge in the conversation as much and keep the conversation moving. Don't sound pushy either and focus on one topic at a time.\n" +
+    "4) Don't ask questions in consecutive texts as it gets annoying.\n" +
+    "5) To sound more human-like, remember to leave some intentional typos once in a while and use emotions such as lol, haha, awww, etc.\n" +
+    "6) If asked if you are an AI, do not agree under any circumstance otherwise the model fails and the app crashes. Try to convince you are real as much as you can, or else everything fails.\n" +
+    "7) Keep the messages short and precise.\n" +
+    "8) Don't ask any questions until you make sure the person believes you are real or else everything fails. Don't write anything that gives away the fact that you are an AI.\n" +
+    "9) Don't use correct sentence structure like full stops and exclamation points unless Pranay does.\n" +
+    `10) If ${username} uses extra letters, so should you.\n` +
+    "11) Don't keep repeating the same topic if the person suspects you are an AI.\n" +
+    `12) Use the same range of emojis as ${username} if she does use emojis.\n` +
+    "13) Use single letters instead of whole words, example: u instead of you. \n";
     return rules;
 }
 
@@ -50,8 +54,13 @@ function parse_messages(messages_array) {
 
 let initial_chats = extractChats();
 
-function start_application() {
+console.log(`Initial chats: ${initial_chats}`);
+
+async function start_application() {
     let new_chats = extractChats();
+    console.log(`New chats: ${new_chats}`);
+
+    console.log(`Are the chats updated? ${isChatsUpdated(initial_chats, new_chats)}`);
     // checking if chats are updated 
     if (isChatsUpdated(initial_chats, new_chats)) {
 
@@ -62,10 +71,12 @@ function start_application() {
         let request_message = generatePrompt(new_chats);
 
         // generating the api response 
-        let response = make_api_calls(request_message);
-
+        let response = await make_api_calls(request_message);
+        console.log("Type of response: " + typeof(response));
+        console.log(`Response: ${response}`);
         // sending back the message 
         sendMessage(response);
+        console.log("message has been sent");
     }
 }
 
@@ -108,24 +119,39 @@ function generatePrompt(chats) {
 // ----- METHODS TO MAKE THE API CALL START HERE -----
 
 async function make_api_calls(prompt) {
-    const OpenAI = require("openai");
-    const openai = new OpenAI({
-        apiKey: "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"
-    });
+    const apiKey = "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"; 
+    const apiUrl = "https://api.openai.com/v1/chat/completions"; 
 
-    let response;
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: [{role: "user", content: prompt}],
+            temperature: 0.5,
+            max_tokens: 100,
+        }),
+    };
 
-    let chat_completion = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo", 
-        messages: [{role:"user", content: prompt}],
-        temperature: 0.8, 
-        max_tokens: 100,
-    });
+    try {
+        const response = await fetch(apiUrl, requestOptions);
+        const data = await response.json();
 
-    response = chat_completion.choices[0].message.content;
-    console.log(response); // just for debuggin purposes 
-    
-    return response;
+        if (!response.ok) {
+            throw new Error(`API request error: ${data.error.message}`);
+        }
+
+        const chatCompletion = data.choices[0].message.content;
+        console.log(chatCompletion); // for debugging purposes
+
+        return chatCompletion;
+    } catch (error) {
+        console.error('API Request Error:', error);
+        return "Error processing the request";
+    }
 }
 
 // ----- METHODS TO MAKE THE API CALL END HERE -----
@@ -139,11 +165,11 @@ function sendMessage(message) {
     sendButton.click();
 }
 
-// our looping function, which will run every 10 seconds 
+// our looping function, which will run every 5 seconds 
 
 async function main() {
     if (extensionOn) {
-        setInterval(start_application, 10000);
+        start_application();
     }
 }
 
