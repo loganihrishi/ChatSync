@@ -1,14 +1,17 @@
-let username;
-let extensionOn;
+(() => {
+    let username = 'hrishi';
+    let extensionOn = true;
 
-// Receiving the message in content.js
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.type === "username") {
-        username = message.value;
-    } else if (message.type === "extensionValue") {
-        extensionOn = message.value;
-    }
-  });
+    // Receiving the message in content.js
+    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+        if (message.type === "username") {
+            username = message.value;
+            console.log("username accepted");
+            main();
+        } else if (message.type === "extensionValue") {
+            extensionOn = message.value;
+        }
+    });
 
     function getRules() {
         let rules = "Follow these rules for the success of the model:\n" +
@@ -31,6 +34,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     // ------ METHODS TO EXTRACT THE CHAT BEGIN HERE ----- 
 
     function extractChats() {
+        console.log("extracting chats");
         let my_messages = [];
         let their_messages = [];
 
@@ -52,50 +56,55 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     // ----- METHODS TO EXTRACT THE CHAT END HERE -----
 
-let initial_chats = extractChats();
 
-console.log(`Initial chats: ${initial_chats}`);
+    async function start_application() {
+        console.log("app started");
+        let new_chats = extractChats();
+        console.log(`New my_messages: ${new_chats.my_messages}`);
+        console.log(`New their messages: ${new_chats.their_messages}`);
 
-async function start_application() {
-    let new_chats = extractChats();
-    console.log(`New chats: ${new_chats}`);
+        let isUpdated = isChatsUpdated(initial_chats, new_chats);
+        console.log(`Are the chats updated? ${isUpdated}`);
+        // checking if chats are updated 
+        if (isUpdated) {
 
-    console.log(`Are the chats updated? ${isChatsUpdated(initial_chats, new_chats)}`);
-    // checking if chats are updated 
-    if (isChatsUpdated(initial_chats, new_chats)) {
-
-        // TODO: update this part, if needed
-        initial_chats = new_chats;
+            // creating a shallow copy 
+            initial_chats = {...new_chats};
 
             // generate the request message 
             let request_message = generatePrompt(new_chats);
-
+            console.log(`Request Message: ${request_message}`);
             // generating the api response 
             let response = await make_api_calls(request_message);
             console.log("Type of response: " + typeof(response));
             console.log(`Response: ${response}`);
+
+            // waiting to send the message, 2 seconds
+            setTimeout(() => {
+                console.log('waiting to send the message');
+            }, 2000);
+            
             // sending back the message 
             sendMessage(response);
-            console.log("message has been sent");
         }
     }
 
     function isChatsUpdated(chats1, chats2) {
-        return !arraysAreEqual(chats1.their_messages, chats2.their_messages);
+        return chats1.their_messages.length != chats2.their_messages.length;
     }
     
-    function arraysAreEqual(arr1, arr2) {
-        if (arr1.length !== arr2.length) {
-            return false;
-        }
+    // function arraysAreEqual(arr1, arr2) {
+    //     if (arr1.length !== arr2.length) {
+    //         return false;
+    //     }
         
-        for (let i = 0; i < arr1.length; i++) {
-            if (arr1[i] !== arr2[i]) {
-                return false;
-            }
-        }
-        return true;
-    }
+    //     for (let i = 0; i < arr1.length; i++) {
+    //         if (arr1[i] !== arr2[i]) {
+    //             return false;
+    //         }
+    //     }
+    //     return true;
+    // }
     
 
     // ----- METHODS TO GENERATE THE PROMPT BEGIN HERE -----
@@ -103,14 +112,9 @@ async function start_application() {
     function generatePrompt(chats) {
         let my_messages = `[${chats.my_messages.toString()}]`;
         let their_messages = `[${chats.their_messages.toString()}]`;
-
-        // just for debugging purposes only 
-        console.log(my_messages);
-        console.log(their_messages);
-
-    let prompt = getRules() + `my messages: [${my_messages}]` + "\n" + `their messages: [${their_messages}]`;
-    return prompt;
-}
+        let prompt = getRules() + `${username}'s messages: [${my_messages}]` + "\n" + `their messages: [${their_messages}]`;
+        return prompt;
+    }
 
 
     // ----- METHODS TO GENERATE THE PROMPT END HERE -----
@@ -131,7 +135,7 @@ async function start_application() {
             body: JSON.stringify({
                 model: "gpt-3.5-turbo",
                 messages: [{role: "user", content: prompt}],
-                temperature: 0.5,
+                temperature: 0.8,
                 max_tokens: 100,
             }),
         };
@@ -145,7 +149,7 @@ async function start_application() {
             }
 
             const chatCompletion = data.choices[0].message.content;
-            console.log(chatCompletion); // for debugging purposes
+            console.log(`API Response: ${chatCompletion}`); // for debugging purposes
 
             return chatCompletion;
         } catch (error) {
@@ -165,12 +169,19 @@ async function start_application() {
         sendButton.click();
     }
 
-// our looping function, which will run every 5 seconds 
+    // our looping function, which will run every 5 seconds 
 
-async function main() {
-    if (extensionOn) {
-        start_application();
+
+    let initial_chats = extractChats();
+    console.log(`Initial chats: ${initial_chats}`);
+    console.log(`${username}'s Messages: ${initial_chats.my_messages}`);
+    console.log(`Their Messages: ${initial_chats.their_messages}`);
+
+    async function main() {
+        console.log("main running");
+        if (extensionOn) {
+            setInterval(start_application, 5000);
+        }
     }
-}
 
-main();
+})();
