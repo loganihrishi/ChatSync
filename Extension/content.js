@@ -121,10 +121,39 @@
     // ----- METHODS TO SEND THE MESSAGE BEGIN HERE ----- 
     function sendMessage(message) {
         const messageInput = document.getElementById("messageInp"); 
-        const sendButton = document.querySelector(".btn");
-        messageInput.value = message;
-        sendButton.click();
+        // const sendButton = document.querySelector(".btn");
+        // messageInput.value = message;
+        // sendButton.click();
+        simulateTyping(message, messageInput);
     }
+
+    function simulateTyping(message, inputElement, delay = 100) {
+        let currentIndex = 0;
+    
+        function typeNextCharacter() {
+            if (currentIndex < message.length) {
+                inputElement.value = message.substring(0, currentIndex + 1);
+                currentIndex++;
+                setTimeout(typeNextCharacter, delay);
+            } else {
+                // After typing is complete, trigger the send button click
+                const sendButton = document.querySelector(".btn");
+                sendButton.click();
+            }
+        }
+    
+        // Start the typing simulation
+        typeNextCharacter();
+    }
+    
+    function sendMessage(message) {
+        const messageInput = document.getElementById("messageInp"); 
+        simulateTyping(message, messageInput);
+    }
+    
+    // Usage
+    sendMessage("Hello, how are you?");
+    
 
     // ----- METHODS TO SEND THE MESSAGE END HERE ----- 
 
