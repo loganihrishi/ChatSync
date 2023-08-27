@@ -127,7 +127,7 @@
         simulateTyping(message, messageInput);
     }
 
-    function simulateTyping(message, inputElement, delay = 100) {
+    function simulateTyping(message, inputElement, delay = 60) {
         let currentIndex = 0;
     
         function typeNextCharacter() {
