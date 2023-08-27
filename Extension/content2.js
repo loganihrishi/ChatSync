@@ -83,7 +83,6 @@
         return prompt;
     }
 
-    // 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
 
     // ----- METHODS TO GENERATE THE PROMPT END HERE -----
 
