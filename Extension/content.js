@@ -136,13 +136,10 @@
                 currentIndex++;
                 setTimeout(typeNextCharacter, delay);
             } else {
-                // After typing is complete, trigger the send button click
                 const sendButton = document.querySelector(".btn");
                 sendButton.click();
             }
         }
-    
-        // Start the typing simulation
         typeNextCharacter();
     }
     
@@ -151,10 +148,6 @@
         simulateTyping(message, messageInput);
     }
     
-    // Usage
-    sendMessage("Hello, how are you?");
-    
-
     // ----- METHODS TO SEND THE MESSAGE END HERE ----- 
 
     async function main() {
