@@ -22,7 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
     extensionOn = !extensionOn;
     status.textContent = extensionOn ? 'ON' : 'OFF';
     usernameInput.style.display = extensionOn ? 'block' : 'none';
-
+    if (extensionOn) {
+      toggleButton.textContent = "Turn Off Extension";
+    } else {
+      toggleButton.textContent = "Turn On Extension";
+    }
     chrome.tabs.sendMessage(activeTab.id, {
       type: "extensionValue",
       value: extensionOn,
