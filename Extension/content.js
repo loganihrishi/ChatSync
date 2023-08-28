@@ -119,13 +119,6 @@
 
 
     // ----- METHODS TO SEND THE MESSAGE BEGIN HERE ----- 
-    function sendMessage(message) {
-        const messageInput = document.getElementById("messageInp"); 
-        // const sendButton = document.querySelector(".btn");
-        // messageInput.value = message;
-        // sendButton.click();
-        simulateTyping(message, messageInput);
-    }
 
     function simulateTyping(message, inputElement, delay = 60) {
         let currentIndex = 0;
