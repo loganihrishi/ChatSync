@@ -6,6 +6,7 @@
     // Receiving the message in content.js
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if (message.type === "username") {
+            console.log('username received');
             username = message.value;
             main();
         } else if (message.type === "extensionValue") {
@@ -13,7 +14,7 @@
         }
     });
 
-    
+
     function getRules() {
         let rules = "Follow these rules for the success of the model:\n" +
         `1) Based on ${username}'s chatting pattern and the way they respond, build your model.\n` +

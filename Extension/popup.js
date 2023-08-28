@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const activeTab = await getActiveTabURL();
 
     username = usernameField.value.trim();
-
+    console.log(`username sent: ${username}`);
     chrome.tabs.sendMessage(activeTab.id, {
       type: "username",
       value: username,
