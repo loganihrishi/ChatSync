@@ -17,7 +17,7 @@ body {
 }
 
 .chat-wrapper {
-    height: 80vh; 
+    height: 87vh; 
     width: 80%;
     margin-left: 10%; 
     color: white; 
@@ -28,9 +28,10 @@ body {
 /* Container styles */
 
 .logo {
-    margin-bottom: 75px;
+    margin-bottom: 100px;
     width: 10px;
-    height: 28px;
+    height: 20px;
+    margin-left: 120px;
 }
 
 .container {
@@ -40,7 +41,7 @@ body {
     margin:  auto;
     height: 60vh;
     overflow-y: auto;
-    margin-bottom: 23px;
+    margin-bottom: 15px;
     border-radius: 15px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
@@ -49,7 +50,7 @@ body {
 .background {
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(0deg, rgb(20, 23, 33) 0%, rgb(20, 23, 33) 50%, rgba(20, 23, 33,0.8) 100%);
+  background: linear-gradient(20deg, rgb(20, 23, 33) 0%, rgb(20, 23, 33) 50%, rgba(20, 23, 33,0.8) 100%);
   /* Vertical center */
   display: table-cell;
   vertical-align: middle;
@@ -76,13 +77,18 @@ body {
     float: left;
     clear: both;
     background-color: #007AFF;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 .right { 
     float: right;
     clear: both;
     background-color: #21cc3d;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
+
 
 /* Send container styles */
 #send-container {
