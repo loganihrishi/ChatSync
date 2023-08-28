@@ -31,7 +31,7 @@ body {
     margin-bottom: 100px;
     width: 10px;
     height: 20px;
-    margin-left: 120px;
+    margin-left: 70px;
 }
 
 .container {
@@ -50,7 +50,7 @@ body {
 .background {
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(20deg, rgb(20, 23, 33) 0%, rgb(20, 23, 33) 50%, rgba(20, 23, 33,0.8) 100%);
+  background: linear-gradient(10deg, rgb(20, 23, 33) 0%, rgb(20, 23, 33) 45%, rgba(20, 23, 33,0.8) 100%);
   /* Vertical center */
   display: table-cell;
   vertical-align: middle;
@@ -96,7 +96,7 @@ body {
     justify-content: center;
     align-items: center;
     margin-top: auto;
-    width: 81%;
+    width: 80.5%;
     margin: auto;
     box-shadow: rgba(24, 144, 255, 0.35) 0px 2px 7px; 
     border: 1px solid rgb(24, 144, 255); 
