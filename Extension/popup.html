@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Extension</title>
     <script src="popup.js"></script>
+    <link rel = "stylesheet" href = "popup.css">
 </head>
 <body>
-    <p>Extension Status: <span id="status">OFF</span></p>
+    <p id="extensionText">Extension Status: <span id="status">OFF</span></p>
     <button id="toggleButton">Turn On Extension</button>
-
     <div id="usernameInput" style="display: none;">
-        <label for="username">Enter Your Username:</label>
-        <input type="text" id="username" placeholder="Your Username">
+        <input type="text" id="username" placeholder="Username">
         <button id="submitUsername">Submit</button>
     </div>
 </body>
