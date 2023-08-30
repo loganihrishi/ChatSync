@@ -13,8 +13,9 @@
 ### Our companion can continue all your conversations even when you are AFK. Switch between manual texting and ChatSync with ease and no one will know the difference!
 
 ## Video Demo
-
-https://github.com/loganihrishi/ChatSync/assets/118128840/e157e432-e688-43cd-9594-394bcc664e53
+<video width="640" height="360" controls>
+    <source src="Assets/ChatSync-demo.mp4" type="video/mp4">
+</video>
 
 ## How to use ChatSync? 
 
