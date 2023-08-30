@@ -16,13 +16,13 @@
 
 https://github.com/loganihrishi/ChatSync/assets/118128840/e157e432-e688-43cd-9594-394bcc664e53
 ### How to use ChatSync? 
-## Running the Chat Application
+# Running the Chat Application
 1. Clone the git repository: `git clone https://github.com/loganihrishi/ChatSync`
 2. Install the dependencies: `npm install`
 3. Navigate to `nodeServer` directory and run the server using the command `npx nodemon index.js`
 4. Now, you can open the `index.html` and then start chatting!
 
-## Running the ChatSync Extension
+# Running the ChatSync Extension
 1. Clone the git repository (same as the previous one). 
 2. In `content.js` in the Extension Directory, replace `YOUR_API_KEY` on line 89 with your actual OpenAI API key.
 3. Then navigate to extensions on Google Chrome and upload the extension folder.
