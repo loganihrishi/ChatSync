@@ -15,7 +15,9 @@
 ## Video Demo
 
 https://github.com/loganihrishi/ChatSync/assets/118128840/e157e432-e688-43cd-9594-394bcc664e53
+
 ### How to use ChatSync? 
+
 # Running the Chat Application
 1. Clone the git repository: `git clone https://github.com/loganihrishi/ChatSync`
 2. Install the dependencies: `npm install`
