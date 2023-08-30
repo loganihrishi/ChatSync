@@ -86,7 +86,7 @@
     // ----- METHODS TO MAKE THE API CALL START HERE -----
 
     async function make_api_calls(prompt) {
-        const apiKey = "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"; 
+        const apiKey = "YOUR_API_KEY"; 
         const apiUrl = "https://api.openai.com/v1/chat/completions"; 
 
         const requestOptions = {
