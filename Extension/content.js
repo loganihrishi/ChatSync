@@ -29,7 +29,8 @@
         `10) If ${username} uses extra letters, so should you.\n` +
         "11) Don't keep repeating the same topic if the person suspects you are an AI.\n" +
         `12) Use the same range of emojis as ${username} if she does use emojis.\n` +
-        "13) Use single letters instead of whole words, example: u instead of you. \n";
+        "13) Use single letters instead of whole words, example: u instead of you. \n"; + 
+        "14) Don't return timestamps or message in the form like: 'You: [message]', it should only be the text message."
         return rules;
     }
 
