@@ -13,14 +13,7 @@
 ### Our companion can continue all your conversations even when you are AFK. Switch between manual texting and ChatSync with ease and no one will know the difference!
 
 ## Video Demo
-<<<<<<< HEAD
 [![Video Thumbnail](Assets/thumbnail.png)](https://drive.google.com/file/d/1EFQdNLICeESzw1aHrfsqRp60ST90kkzZ/view?usp=sharing)
-
-
-
-=======
-Click [here](https://drive.google.com/file/d/1EFQdNLICeESzw1aHrfsqRp60ST90kkzZ/view?usp=drive_link) to see the video demo. 
->>>>>>> dd5231c5640f85194d39fe7b5c838fb671c2b779
 ## How to use ChatSync? 
 
 ### Running the Chat Application
