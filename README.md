@@ -13,22 +13,28 @@
 ### Our companion can continue all your conversations even when you are AFK. Switch between manual texting and ChatSync with ease and no one will know the difference!
 
 ## Video Demo
+
 [![Video Thumbnail](Assets/thumbnail.png)](https://drive.google.com/file/d/1EFQdNLICeESzw1aHrfsqRp60ST90kkzZ/view?usp=sharing)
-## How to use ChatSync? 
+
+## How to use ChatSync?
 
 ### Running the Chat Application
+
 1. Clone the git repository: `git clone https://github.com/loganihrishi/ChatSync`
 2. Install the dependencies: `npm install`
 3. Navigate to `nodeServer` directory and run the server using the command `npx nodemon index.js`
 4. Now, you can open the `index.html` and then start chatting!
 
 ### Running the ChatSync Extension
-1. Clone the git repository (same as the previous one). 
+
+1. Clone the git repository (same as the previous one).
 2. In `content.js` in the Extension Directory, replace `YOUR_API_KEY` on line 89 with your actual OpenAI API key.
 3. Then navigate to extensions on Google Chrome and upload the extension folder.
 4. That's it. Your extension is ready to be used.
 
+#### CONTRIBUTERS
 
-
-
-
+- Hrishi Logani 
+- Parthkumar Patel
+- Pranay Aggarwal
+- Shikha Rajesh
