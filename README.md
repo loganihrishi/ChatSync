@@ -32,9 +32,9 @@
 3. Then navigate to extensions on Google Chrome and upload the extension folder.
 4. That's it. Your extension is ready to be used.
 
-#### CONTRIBUTERS
+## Contributers
 
-- Hrishi Logani 
-- Parthkumar Patel
-- Pranay Aggarwal
-- Shikha Rajesh
+- [Hrishi Logani](https://github.com/loganihrishi)
+- [Parthkumar Patel](https://github.com/Parcode19)
+- [Pranay Aggarwal](https://github.com/pranay-aggarwal)
+- [Shikha Rajesh](https://github.com/shikha-33)
